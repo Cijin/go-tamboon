@@ -16,13 +16,13 @@ import (
 
 const currency = "thb"
 
-func ProcessDonations(client *omise.Client, donors []donor.Donor) string {
-	var successfullDonors []donor.Donor
+func ProcessDonations(client *omise.Client, donors []*donor.Donor) string {
+	var successfullDonors []*donor.Donor
 	var successfullDonations int64
 	var failedDonations int64
 
-	chanSuccess := make(chan donor.Donor)
-	chanFail := make(chan donor.Donor)
+	chanSuccess := make(chan *donor.Donor)
+	chanFail := make(chan *donor.Donor)
 
 	for _, donor := range donors {
 		go processTransaction(client, donor, chanSuccess, chanFail)
@@ -47,7 +47,7 @@ func ProcessDonations(client *omise.Client, donors []donor.Donor) string {
 	return summary(successfullDonations, failedDonations, successfullDonors)
 }
 
-func processTransaction(client *omise.Client, d donor.Donor, chanSuccess, chanFail chan donor.Donor) {
+func processTransaction(client *omise.Client, d *donor.Donor, chanSuccess, chanFail chan *donor.Donor) {
 	card, createToken := &omise.Card{}, &operations.CreateToken{
 		Name:            d.Name,
 		Number:          d.CCNumber,
@@ -85,7 +85,7 @@ func processTransaction(client *omise.Client, d donor.Donor, chanSuccess, chanFa
 	chanFail <- d
 }
 
-func summary(sucessAmount, failedAmount int64, sucessfullDonors []donor.Donor) string {
+func summary(sucessAmount, failedAmount int64, sucessfullDonors []*donor.Donor) string {
 	var summary strings.Builder
 
 	// Use the Builder to efficiently construct the string

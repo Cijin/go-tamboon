@@ -10,8 +10,7 @@ import (
 )
 
 type DonorCSV struct {
-	Reader    *csv.Reader
-	DonorChan chan<- *Donor
+	Reader *csv.Reader
 }
 
 func NewDonorCSV(r io.Reader, donorChan chan<- *Donor) (*DonorCSV, error) {
@@ -29,12 +28,12 @@ func NewDonorCSV(r io.Reader, donorChan chan<- *Donor) (*DonorCSV, error) {
 	}
 
 	return &DonorCSV{
-		csvReader, donorChan,
+		csvReader,
 	}, nil
 }
 
-func (d *DonorCSV) Read() []Donor {
-	var donors []Donor
+func (d *DonorCSV) Read() []*Donor {
+	var donors []*Donor
 
 	for {
 		record, err := d.Reader.Read()
@@ -52,7 +51,7 @@ func (d *DonorCSV) Read() []Donor {
 	return donors
 }
 
-func parseDonorRecord(r []string) Donor {
+func parseDonorRecord(r []string) *Donor {
 	// fit to int64
 	amount, err := strconv.ParseInt(r[1], 10, 64)
 	if err != nil {
@@ -69,7 +68,7 @@ func parseDonorRecord(r []string) Donor {
 		log.Println("Malformed year in record:", err)
 	}
 
-	return Donor{
+	return &Donor{
 		Name:     r[0],
 		Amount:   amount,
 		CCNumber: r[2],
