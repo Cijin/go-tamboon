@@ -24,6 +24,11 @@ func ProcessDonations(client *omise.Client, donors []*donor.Donor) string {
 	chanSuccess := make(chan *donor.Donor)
 	chanFail := make(chan *donor.Donor)
 
+	defer func() {
+		close(chanSuccess)
+		close(chanFail)
+	}()
+
 	for _, donor := range donors {
 		go processTransaction(client, donor, chanSuccess, chanFail)
 
