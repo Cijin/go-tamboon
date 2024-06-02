@@ -92,15 +92,16 @@ func processTransaction(client *omise.Client, d *donor.Donor, chanSuccess, chanF
 
 func summary(sucessAmount, failedAmount int64, sucessfullDonors []*donor.Donor) string {
 	var summary strings.Builder
+	c := strings.ToUpper(currency)
 
 	// Use the Builder to efficiently construct the string
-	summary.WriteString(fmt.Sprintf("total received:\t THB\t %d\n", sucessAmount+failedAmount))
-	summary.WriteString(fmt.Sprintf("successfully donated:\t THB\t %d\n", sucessAmount))
-	summary.WriteString(fmt.Sprintf("faulty donation:\t THB\t %d\n", failedAmount))
+	summary.WriteString(fmt.Sprintf("total received:\t %s\t %d\n", c, sucessAmount+failedAmount))
+	summary.WriteString(fmt.Sprintf("successfully donated:\t %s\t %d\n", c, sucessAmount))
+	summary.WriteString(fmt.Sprintf("faulty donation:\t %s\t %d\n", c, failedAmount))
 	summary.WriteString("\n")
 
 	if len(sucessfullDonors) != 0 {
-		summary.WriteString(fmt.Sprintf("average per person:\t THB\t %d\n", sucessAmount/int64(len(sucessfullDonors))))
+		summary.WriteString(fmt.Sprintf("average per person:\t %s\t %d\n", c, sucessAmount/int64(len(sucessfullDonors))))
 	}
 
 	sort.Slice(sucessfullDonors, func(i, j int) bool {
@@ -116,6 +117,5 @@ func summary(sucessAmount, failedAmount int64, sucessfullDonors []*donor.Donor) 
 		summary.WriteString(fmt.Sprintf("\t%s\n", donor.Name))
 	}
 
-	// Return the built string
 	return summary.String()
 }

@@ -57,5 +57,7 @@ func main() {
 	fmt.Println("performing donations...")
 
 	summary := transaction.ProcessDonations(client, donors)
+
+	fmt.Println("done.")
 	fmt.Println(summary)
 }
