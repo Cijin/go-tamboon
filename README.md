@@ -9,7 +9,12 @@ Steps to get started:
 4. Or you can `export <KEY_NAME>=<value>`
 5. Then simply run `go run cmd/tamboon.go ./data/fng.1000.csv.rot128`
 
-Project Structure:
+Mental Model:
+1. Get list of donors from csv
+2. Pass donors onto transaction service
+3. Charge transactions concurrently
+4. Return summary of transactions
 
-
-
+Remarks:
+* Token creation seems to return `html` response at times which seems to cause a UnMarshalling error. Cause seems `client` validity expires.
+* Most if not all cards seemed to have expired, to test I increased the expiry by 10 years for all.
