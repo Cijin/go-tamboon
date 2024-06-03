@@ -17,4 +17,4 @@ Mental Model:
 
 Remarks:
 * Token creation seems to return `html` response at times which seems to cause a UnMarshalling error. Cause seems `client` validity expires.
-* Most if not all cards seemed to have expired, to test I increased the expiry by 10 years for all.
+* Most if not all cards seemed to have expired, to test I increased the expiry by 10 years for all (which I've removed).
