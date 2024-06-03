@@ -19,6 +19,12 @@ func main() {
 		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
 	}
 
+	if len(os.Args) < 2 {
+		log.Println("Missing required csv file")
+		log.Printf("Usage:%s <file.csv>\n", os.Args[0])
+		os.Exit(1)
+	}
+
 	filePath := os.Args[1]
 	publicKey := os.Getenv("OMISE_PUBLIC_KEY")
 	privateKey := os.Getenv("OMISE_PRIVATE_KEY")

@@ -61,7 +61,6 @@ func processTransaction(client *omise.Client, d *donor.Donor, chanSuccess, chanF
 		SecurityCode:    d.CVV,
 	}
 
-	// Requests fail at times	with error: looking for value with response body: <html>...
 	if err := client.Do(card, createToken); err != nil {
 		log.Println("Create omise token error:", err)
 
