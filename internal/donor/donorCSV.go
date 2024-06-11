@@ -13,7 +13,7 @@ type DonorCSV struct {
 	Reader *csv.Reader
 }
 
-func NewDonorCSV(r io.Reader, donorChan chan<- *Donor) (*DonorCSV, error) {
+func NewDonorCSV(r io.Reader) (*DonorCSV, error) {
 	csvReader := csv.NewReader(r)
 
 	// header

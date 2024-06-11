@@ -44,9 +44,8 @@ func main() {
 
 	// err always nil
 	cipherReader, _ := cipher.NewRot128Reader(file)
-	donorChan := make(chan *donor.Donor)
 
-	donorCSV, err := donor.NewDonorCSV(cipherReader, donorChan)
+	donorCSV, err := donor.NewDonorCSV(cipherReader)
 	if err != nil {
 		log.Println("Csv might be corrupted")
 		os.Exit(1)
